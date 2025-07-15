@@ -1,0 +1,12 @@
+<script defer phx-track-static type="module" src={~p"/assets/js/site.js"}>
+</script>
+<header class="site-header">
+  <a href="/" class="logo">Bookbook</a>
+  <input id="side-menu" type="checkbox" />
+  <label for="side-menu" class="hamburger"><span class="hamburger-line" /></label>
+  <.nav current_user={@current_user} />
+</header>
+<main>
+  <.flash_group flash={@flash} />
+  <%= @inner_content %>
+</main>

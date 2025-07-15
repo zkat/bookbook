@@ -1,0 +1,86 @@
+@import url("./theme-light.css");
+@import url("./theme-dark.css");
+
+/*
+Non-theme variables
+*/
+:root {
+  --border-radius: 10px;
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+  --font-family: Arial, Verdana, sans-serif;
+
+  /* Colors (from themes) */
+  --background-primary: var(--light-theme-bg-color);
+  --background-accent: var(--light-theme-special-bg-color);
+  --text-normal: var(--light-theme-text-color);
+  --text-muted: var(--light-theme-text-soft-color);
+  --text-faint: var(--light-theme-subtle-color);
+  --text-strong: var(--light-theme-text-strong-color);
+  --text-hover: var(--light-theme-text-soft-color);
+  --text-accent: var(--light-theme-special-text-color);
+  --shadow: var(--light-theme-shadow-color);
+  --text-success: var(--light-theme-success, green);
+  --text-warning: var(--light-theme-warning, orange);
+  --text-error: var(--light-theme-error, red);
+  --text-on-success: var(--light-theme-text-success, green);
+  --text-on-warning: var(--light-theme-text-warning, orange);
+  --text-on-error: var(--light-theme-text-error, red);
+  --link: var(--light-theme-link);
+  --link-hover: var(--light-theme-link-hover);
+  --link-hover-visited: var(--light-theme-link-hover-visited);
+  --link-visited: var(--light-theme-link-hover-visited);
+}
+
+@media (prefers-color-scheme: dark) {
+  body.theme-system {
+    --background-primary: var(--dark-theme-bg-color);
+    --background-accent: var(--dark-theme-special-bg-color);
+    --text-normal: var(--dark-theme-text-color);
+    --text-muted: var(--dark-theme-text-soft-color);
+    --text-faint: var(--dark-theme-subtle-color);
+    --text-strong: var(--dark-theme-text-strong-color);
+    --text-hover: var(--dark-theme-text-soft-color);
+    --text-accent: var(--dark-theme-special-text-color);
+    --shadow: var(--dark-theme-shadow-color);
+    --text-success: var(--dark-theme-success, green);
+    --text-warning: var(--dark-theme-warning, orange);
+    --text-error: var(--dark-theme-error, red);
+    --text-on-success: var(--dark-theme-text-success, green);
+    --text-on-warning: var(--dark-theme-text-warning, orange);
+    --text-on-error: var(--dark-theme-text-error, red);
+    --link: var(--dark-theme-link);
+    --link-hover: var(--dark-theme-link-hover);
+    --link-hover-visited: var(--dark-theme-link-hover-visited);
+    --link-visited: var(--dark-theme-link-hover-visited);
+  }
+}
+
+body.theme-dark {
+  --background-primary: var(--dark-theme-bg-color);
+  --background-accent: var(--dark-theme-special-bg-color);
+  --text-normal: var(--dark-theme-text-color);
+  --text-muted: var(--dark-theme-text-soft-color);
+  --text-faint: var(--dark-theme-subtle-color);
+  --text-strong: var(--dark-theme-text-strong-color);
+  --text-hover: var(--dark-theme-text-soft-color);
+  --text-accent: var(--dark-theme-special-text-color);
+  --shadow: var(--dark-theme-shadow-color);
+  --text-success: var(--dark-theme-success, green);
+  --text-warning: var(--dark-theme-warning, orange);
+  --text-error: var(--dark-theme-error, red);
+  --text-on-success: var(--dark-theme-text-success, green);
+  --text-on-warning: var(--dark-theme-text-warning, orange);
+  --text-on-error: var(--dark-theme-text-error, red);
+  --link: var(--dark-theme-link);
+  --link-hover: var(--dark-theme-link-hover);
+  --link-hover-visited: var(--dark-theme-link-hover-visited);
+  --link-visited: var(--dark-theme-link-hover-visited);
+}

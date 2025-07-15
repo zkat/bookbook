@@ -1,0 +1,40 @@
+/*
+Theme generated from https://theme.tenphi.me/
+
+Do not use these variables directly. Use the more "semantic" ones in
+`variables.css` instead.
+*/
+:root {
+  --dark-theme-bg-color: rgba(32, 32, 32, 1);
+  --dark-theme-text-color: rgba(206, 228, 219, 1);
+  --dark-theme-text-soft-color: rgba(180, 190, 186, 1);
+  --dark-theme-text-strong-color: rgba(187, 187, 187, 1);
+  --dark-theme-subtle-color: rgba(30, 38, 35, 1);
+  --dark-theme-border-color: rgba(30, 53, 44, 1);
+  --dark-theme-shadow-color: rgba(0, 0, 0, 1);
+  --dark-theme-input-color: rgba(28, 28, 28, 1);
+  --dark-theme-outline-color: rgba(169, 148, 215, 1);
+  --dark-theme-mark-color: rgba(149, 128, 195, 0.08);
+  --dark-theme-special-color: rgba(149, 128, 195, 1);
+  --dark-theme-special-bg-color: rgba(113, 82, 167, 1);
+  --dark-theme-special-text-color: rgba(224, 222, 227, 1);
+  --dark-theme-special-shadow-color: rgba(32, 29, 39, 1);
+  --dark-theme-special-mark-color: rgba(224, 222, 227, 0.08);
+  --dark-theme-light-color: rgba(215, 208, 233, 1);
+  --dark-theme-dark-color: rgba(55, 51, 65, 1);
+  --dark-theme-error: rgba(243, 80, 103, 1);
+  --dark-theme-text-error: rgba(230, 221, 221, 1);
+  --dark-theme-bg-error: rgba(190, 36, 50, 1);
+
+  --dark-theme-text-color-rgb: 206, 228, 219;
+  --dark-theme-bg-color-rgb: 32, 32, 32;
+  --dark-theme-subtle-color-rgb: 30, 38, 35;
+  --dark-theme-special-color-rgb: 149, 128, 195;
+  --dark-theme-special-text-color-rgb: 224, 222, 227;
+  --dark-theme-special-bg-color-rgb: 113, 82, 167;
+  --dark-theme-shadow-color-rgb: 0, 0, 0;
+  --dark-theme-special-shadow-color-rgb: 32, 29, 39;
+  --dark-theme-outline-color-rgb: 169, 148, 215;
+  --dark-theme-dark-color-rgb: 55, 51, 65;
+  --dark-theme-light-color-rgb: 215, 208, 233;
+}

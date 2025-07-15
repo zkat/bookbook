@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title suffix=" · Bookbook">
+      <%= assigns[:page_title] || "Bookbook" %>
+    </.live_title>
+    <meta name="description" content={assigns[:page_description] || "Bookbook"} />
+    <meta name="page-route" content={assigns[:current_route]} />
+    <meta property="og:title" content={assigns[:page_title] || "Bookbook"} />
+    <meta
+      property="og:description"
+      content={
+        assigns[:page_description] ||
+          "Books!"
+      }
+    />
+    <%= cond do %>
+      <% assigns[:page_small_image] -> %>
+        <meta property="og:image" content={assigns[:page_small_image]} />
+        <meta name="twitter:image:src" content={assigns[:page_image]} />
+        <meta name="twitter:card" content="summary" />
+      <% assigns[:page_image] -> %>
+        <meta property="og:image" content={assigns[:page_image]} />
+        <meta name="twitter:image:src" content={assigns[:page_image]} />
+        <meta name="twitter:card" content="summary_large_image" />
+      <% true -> %>
+    <% end %>
+    <!-- Yeah fuck you -->
+    <meta name="CCBot" content="nofollow" />
+    <meta name="robots" content="noai, noimageai" />
+
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <!-- Styles imported by JS source files -->
+    <link phx-track-static rel="stylesheet" href={~p"/assets/js/app.css"} />
+  </head>
+  <body class={"theme-#{assigns[:theme]}"}>
+    <%= @inner_content %>
+    <footer class="site-footer">
+      <.simple_form for={@conn.params} action={~p"/theme"}>
+        <input type="hidden" name="redirect_to" value={@conn.request_path} />
+        <.button name="theme" value="light" id="theme-picker-light">Light</.button>
+        <.button name="theme" value="dark" id="theme-picker-dark">Dark</.button>
+        <.button name="theme" value="system" id="theme-picker-system">System</.button>
+      </.simple_form>
+    </footer>
+  </body>
+</html>

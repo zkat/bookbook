@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "outDir": "dist",
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "sourceMap": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "newLine": "lf",
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "lib": [
+      "ESNext",
+      "dom",
+      "DOM.Iterable"
+    ],
+    "incremental": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false
+  }
+}
