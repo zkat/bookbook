@@ -44,6 +44,7 @@ const contextBase = {
 const mainContext = await esbuild.context({
   ...contextBase,
   entryPoints: [
+    "js/site.ts",
     "js/app.ts",
     "css/app.css",
     "css/theme-dark.css",

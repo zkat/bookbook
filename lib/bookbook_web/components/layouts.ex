@@ -10,6 +10,7 @@ defmodule BookbookWeb.Layouts do
   """
   use BookbookWeb, :html
   import BookbookWeb.Components.Nav
+  import BookbookWeb.Components.ThemePicker
 
   embed_templates "layouts/*"
 end

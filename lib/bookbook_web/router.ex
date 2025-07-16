@@ -5,6 +5,8 @@ defmodule BookbookWeb.Router do
 
   @host Application.compile_env!(:bookbook, [BookbookWeb.Endpoint, :url, :host])
 
+  @enable_ssr Application.compile_env!(:bookbook, [Bookbook.LitSSRWorker, :enable_ssr])
+
   @content_security_policy (case Application.compile_env!(:bookbook, :env) do
                               :prod ->
                                 "default-src 'self' 'unsafe-eval' 'unsafe-inline';" <>
@@ -44,6 +46,14 @@ defmodule BookbookWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :app do
+    plug :put_layout, html: {BookbookWeb.Layouts, :app}
+  end
+
+  pipeline :site do
+    plug :put_layout, html: {BookbookWeb.Layouts, :site}
+  end
+
   defp put_current_route(conn, _) do
     case Phoenix.Router.route_info(BookbookWeb.Router, "GET", current_path(conn), "any") do
       :error -> conn
@@ -64,10 +74,14 @@ defmodule BookbookWeb.Router do
   end
 
   defp lit_ssr_content(conn, _) do
-    register_before_send(conn, fn conn ->
-      {:ok, rendered} = Bookbook.LitSSRWorker.prerender_html(conn.resp_body |> to_string())
-      resp(conn, conn.status, rendered)
-    end)
+    if @enable_ssr do
+      register_before_send(conn, fn conn ->
+        {:ok, rendered} = Bookbook.LitSSRWorker.prerender_html(conn.resp_body |> to_string())
+        resp(conn, conn.status, rendered)
+      end)
+    else
+      conn
+    end
   end
 
   defp put_user_token(conn, _) do
@@ -79,14 +93,23 @@ defmodule BookbookWeb.Router do
     end
   end
 
-  # Application routes
+  # "Minimal" site routes. These don't involve much, if any, JS
+  scope "/", BookbookWeb do
+    pipe_through [:browser, :site]
 
+    get "/", PageController, :home
+  end
+
+  # App routes. These are for dashboard etc which might require some frontent JS work.
+  scope "/", BookbookWeb do
+    pipe_through [:browser, :app]
+  end
+
+  # Misc routes
   scope "/", BookbookWeb do
     pipe_through :browser
 
     post "/theme", ThemeController, :update
-    
-    get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -97,7 +120,7 @@ defmodule BookbookWeb.Router do
   ## Authentication routes
 
   scope "/", BookbookWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :site, :redirect_if_user_is_authenticated]
 
     get "/users/register", UserRegistrationController, :new
     post "/users/register", UserRegistrationController, :create
@@ -110,7 +133,7 @@ defmodule BookbookWeb.Router do
   end
 
   scope "/", BookbookWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through [:browser, :site, :require_authenticated_user]
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
@@ -118,7 +141,7 @@ defmodule BookbookWeb.Router do
   end
 
   scope "/", BookbookWeb do
-    pipe_through [:browser]
+    pipe_through [:browser, :site]
 
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new

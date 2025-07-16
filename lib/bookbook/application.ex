@@ -5,6 +5,8 @@ defmodule Bookbook.Application do
 
   use Application
 
+  @enable_ssr Application.compile_env!(:bookbook, [Bookbook.LitSSRWorker, :enable_ssr])
+
   @impl true
   def start(_type, _args) do
     children = [
@@ -18,14 +20,21 @@ defmodule Bookbook.Application do
       # {Bookbook.Worker, arg},
       # Start to serve requests, typically the last entry
       BookbookWeb.Endpoint,
-      :poolboy.child_spec(:lit_ssr_worker, poolboy_config()),
       {Bookbook.RateLimit, clean_period: :timer.minutes(1)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Bookbook.Supervisor]
-    Supervisor.start_link(children, opts)
+
+    Supervisor.start_link(
+      if @enable_ssr do
+        children ++ [:poolboy.child_spec(:lit_ssr_worker, poolboy_config())]
+      else
+        children
+      end,
+      opts
+    )
   end
 
   # Tell Phoenix to update the endpoint configuration

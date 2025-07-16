@@ -27,6 +27,8 @@ config :bookbook, BookbookWeb.Endpoint,
   pubsub_server: Bookbook.PubSub,
   live_view: [signing_salt: "iJqiZOQt"]
 
+config :bookbook, Bookbook.LitSSRWorker, enable_ssr: false
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

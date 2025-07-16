@@ -1,3 +1,5 @@
-import "@lit-labs/ssr-client/lit-element-hydrate-support.js";
+import "./site.ts";
 import "./components/index";
-import "./theme-picker";
+
+// Uncomment to enable Lit SSR hydration
+// import "@lit-labs/ssr-client/lit-element-hydrate-support.js";

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content={get_csrf_token()} />
     <.live_title suffix=" · Bookbook">
-      <%= assigns[:page_title] || "Bookbook" %>
+      {assigns[:page_title] || "Bookbook"}
     </.live_title>
     <meta name="description" content={assigns[:page_description] || "Bookbook"} />
     <meta name="page-route" content={assigns[:current_route]} />
@@ -39,14 +39,18 @@
     <link phx-track-static rel="stylesheet" href={~p"/assets/js/app.css"} />
   </head>
   <body class={"theme-#{assigns[:theme]}"}>
-    <%= @inner_content %>
+    <header class="site-header">
+      <a href="/" class="logo">Bookbook</a>
+      <input id="side-menu" type="checkbox" />
+      <label for="side-menu" class="hamburger"><span class="hamburger-line" /></label>
+      <.nav current_user={@current_user} />
+    </header>
+    <main>
+      <.flash_group flash={@flash} />
+      {@inner_content}
+    </main>
     <footer class="site-footer">
-      <.simple_form for={@conn.params} action={~p"/theme"}>
-        <input type="hidden" name="redirect_to" value={@conn.request_path} />
-        <.button name="theme" value="light" id="theme-picker-light">Light</.button>
-        <.button name="theme" value="dark" id="theme-picker-dark">Dark</.button>
-        <.button name="theme" value="system" id="theme-picker-system">System</.button>
-      </.simple_form>
+      <.theme_picker conn={@conn} />
     </footer>
   </body>
 </html>
