@@ -24,7 +24,7 @@ defmodule BookbookWeb.Components.Nav do
         </li>
         <%= if @current_user do %>
           <li>
-            {@current_user.handle}
+            {@current_user.email}
           </li>
           <li>
             <a href={~p"/users/settings"}>

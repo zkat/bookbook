@@ -28,6 +28,7 @@ defmodule BookbookWeb.Router do
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, html: {BookbookWeb.Layouts, :root}
+    plug :put_layout, html: {BookbookWeb.Layouts, :site}
     plug :protect_from_forgery
 
     plug :put_secure_browser_headers, %{
@@ -46,12 +47,9 @@ defmodule BookbookWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Changes the layout to the "rich web app" layout aka load the "fat" app.js/
   pipeline :app do
     plug :put_layout, html: {BookbookWeb.Layouts, :app}
-  end
-
-  pipeline :site do
-    plug :put_layout, html: {BookbookWeb.Layouts, :site}
   end
 
   defp put_current_route(conn, _) do
@@ -93,23 +91,21 @@ defmodule BookbookWeb.Router do
     end
   end
 
-  # "Minimal" site routes. These don't involve much, if any, JS
+  # Main site routes
   scope "/", BookbookWeb do
-    pipe_through [:browser, :site]
+    pipe_through [:browser]
 
     get "/", PageController, :home
-  end
-
-  # App routes. These are for dashboard etc which might require some frontent JS work.
-  scope "/", BookbookWeb do
-    pipe_through [:browser, :app]
-  end
-
-  # Misc routes
-  scope "/", BookbookWeb do
-    pipe_through :browser
 
     post "/theme", ThemeController, :update
+  end
+
+  # App routes. These are for dashboard etc which might require some heavier
+  # frontent JS work.
+  scope "/", BookbookWeb do
+    pipe_through [:browser, :app, :require_authenticated_user]
+
+    get "/dashboard", PageController, :dashboard
   end
 
   # Other scopes may use custom stacks.
@@ -120,7 +116,7 @@ defmodule BookbookWeb.Router do
   ## Authentication routes
 
   scope "/", BookbookWeb do
-    pipe_through [:browser, :site, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/users/register", UserRegistrationController, :new
     post "/users/register", UserRegistrationController, :create
@@ -133,7 +129,7 @@ defmodule BookbookWeb.Router do
   end
 
   scope "/", BookbookWeb do
-    pipe_through [:browser, :site, :require_authenticated_user]
+    pipe_through [:browser, :require_authenticated_user]
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
@@ -141,7 +137,7 @@ defmodule BookbookWeb.Router do
   end
 
   scope "/", BookbookWeb do
-    pipe_through [:browser, :site]
+    pipe_through [:browser]
 
     delete "/users/log_out", UserSessionController, :delete
     get "/users/confirm", UserConfirmationController, :new
